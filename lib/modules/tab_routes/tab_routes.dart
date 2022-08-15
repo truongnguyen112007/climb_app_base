@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class RoutesPage extends StatefulWidget {
-  const RoutesPage({Key? key}) : super(key: key);
+class TabRoutes extends StatefulWidget {
+  const TabRoutes({Key? key}) : super(key: key);
 
   @override
-  State<RoutesPage> createState() => _RoutesPageState();
+  State<TabRoutes> createState() => _TabRoutesState();
 }
 
-class _RoutesPageState extends State<RoutesPage> {
+class _TabRoutesState extends State<TabRoutes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

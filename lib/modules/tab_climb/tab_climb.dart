@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ClimbPage extends StatefulWidget {
-  const ClimbPage({Key? key}) : super(key: key);
+class TabClimb extends StatefulWidget {
+  const TabClimb({Key? key}) : super(key: key);
 
   @override
-  State<ClimbPage> createState() => _ClimbPageState();
+  State<TabClimb> createState() => _TabClimbState();
 }
 
-class _ClimbPageState extends State<ClimbPage> {
+class _TabClimbState extends State<TabClimb> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
