@@ -64,8 +64,7 @@ class _AppButtonNavigationBarState extends State<AppButtonNavigationBar> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      height: 40,
-                      width: 90,
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 3),
                       decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.only(
@@ -78,7 +77,7 @@ class _AppButtonNavigationBarState extends State<AppButtonNavigationBar> {
                         icon: Icons.language_outlined,
                         gradient: LinearGradient(
                           colors: currentTab == TAB_CLIMB
-                              ? [Colors.green, Colors.blue]
+                              ? [Colors.red, Colors.orange]
                               : [Colors.grey, Colors.grey],
                         ),
                       ),
