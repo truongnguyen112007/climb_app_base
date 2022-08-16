@@ -28,7 +28,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text('RECLIMB'),
+        actions: [
+
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
@@ -67,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Text(
                 title,
-                style: TextStyle(color: currentTab==index ? Colors.red:Colors.grey),
+                style: TextStyle(color: currentTab==index ? Colors.orange:Colors.grey),
               ),
             ],
           ),
