@@ -12,7 +12,10 @@ class _TabClimbState extends State<TabClimb> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Climb Page',style: TextStyle(fontSize: 30),),
+        child: Text(
+          "Climb page",
+          style: TextStyle(fontSize: 30),
+        ),
       ),
     );
   }

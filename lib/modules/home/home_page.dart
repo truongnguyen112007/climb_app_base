@@ -6,6 +6,7 @@ import '../tab_profile/tab_profile.dart';
 import '../tab_reservations/tab_reservations.dart';
 import '../tab_routes/tab_routes.dart';
 
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -14,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   var pageController = PageController();
   int currentTab = 0;
   final tabs = [
@@ -28,17 +28,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text('RECLIMB'),
-        actions: [
-
-        ],
-      ),
       body: Column(
         children: [
           Expanded(
             child: PageView(
+              physics: NeverScrollableScrollPhysics(),
               controller: pageController,
               children: tabs,
             ),
@@ -51,9 +45,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void jumtToPage(int index) =>
-      pageController.animateToPage(index, duration: Duration(milliseconds: 500),
-          curve: Curves.fastLinearToSlowEaseIn);
+  void jumtToPage(int index) => pageController.animateToPage(index,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.fastLinearToSlowEaseIn);
 
   Widget itemBottomNavigationBar(IconData icon, int index, String title) =>
       Expanded(
@@ -73,7 +67,8 @@ class _HomePageState extends State<HomePage> {
               ),
               Text(
                 title,
-                style: TextStyle(color: currentTab==index ? Colors.orange:Colors.grey),
+                style: TextStyle(
+                    color: currentTab == index ? Colors.orange : Colors.grey),
               ),
             ],
           ),
