@@ -35,7 +35,8 @@ class _AppButtonNavigationBarState extends State<AppButtonNavigationBar> {
                 itemBottomNavigationBar(Icons.home_filled, TAB_HOME, 'home'),
                 itemBottomNavigationBar(
                     Icons.map_outlined, TAB_ROUTES, 'Routes'),
-                const Expanded(child: SizedBox()),
+                itemBottomNavigationBar(
+                    Icons.map_outlined, TAB_CLIMB, 'Climp',disableIcon: true),
                 itemBottomNavigationBar(
                     Icons.date_range_sharp, TAB_RESERVATIONS, 'Reservations'),
                 itemBottomNavigationBar(
@@ -49,45 +50,31 @@ class _AppButtonNavigationBarState extends State<AppButtonNavigationBar> {
             alignment: Alignment.topCenter,
             child: Container(
               alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.only(bottom: 10),
+              padding: EdgeInsets.only(bottom: 25.h),
               child: InkWell(
                 onTap: () {
                   currentTab = 2;
                   widget.indexCallBack(currentTab);
                   setState(() {});
                 },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 3),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(100),
-                          topRight: Radius.circular(100),
-                        ),
-                      ),
-                      child: GradientIcon(
-                        size: 30,
-                        icon: Icons.language_outlined,
-                        gradient: LinearGradient(
-                          colors: currentTab == TAB_CLIMB
-                              ? [Colors.red, Colors.orange]
-                              : [Colors.grey, Colors.grey],
-                        ),
-                      ),
+                child:  Container(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 3),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(100),
+                      topRight: Radius.circular(100),
                     ),
-                    SizedBox(
-                      height: 4,
+                  ),
+                  child: GradientIcon(
+                    size: 30,
+                    icon: Icons.language_outlined,
+                    gradient: LinearGradient(
+                      colors: currentTab == TAB_CLIMB
+                          ? [Colors.red, Colors.orange]
+                          : [Colors.grey, Colors.grey],
                     ),
-                    Text("Climb",
-                        style: TextStyle(fontSize: 13.5.sp,
-                            color: currentTab == TAB_CLIMB
-                                ? Colors.orange
-                                : Colors.grey)),
-                Spacer()
-                  ],
+                  ),
                 ),
               ),
               width: 80.w,
@@ -98,7 +85,8 @@ class _AppButtonNavigationBarState extends State<AppButtonNavigationBar> {
     );
   }
 
-  Widget itemBottomNavigationBar(IconData icon, int index, String title) =>
+  Widget itemBottomNavigationBar(IconData icon, int index, String title,
+      {bool disableIcon = false}) =>
       Expanded(
         child: InkWell(
           onTap: () {
@@ -111,14 +99,16 @@ class _AppButtonNavigationBarState extends State<AppButtonNavigationBar> {
             height: MediaQuery.of(context).size.height,
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GradientIcon(
                   size: 20,
                   icon: icon,
                   gradient: LinearGradient(
-                    colors: currentTab == index
-                        ? [Colors.red, Colors.orange]
-                        : [Colors.grey, Colors.grey],
+                    colors: disableIcon ? [Colors.transparent, Colors.transparent]
+                    : currentTab == index
+                    ? [Colors.red, Colors.orange]
+                    : [Colors.grey, Colors.grey],
                   ),
                 ),
                 Text(
