@@ -39,6 +39,7 @@ class _TabHomeState extends State<TabHome> {
         ],
       ),
       body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
             Padding(
@@ -96,17 +97,17 @@ class _TabHomeState extends State<TabHome> {
                 ),
               ),
             ),
-            ListView.builder(
+            ListView.separated(
               physics: NeverScrollableScrollPhysics(),
-              primary: false,
+              primary: true,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   height: size.height / 4,
                   decoration: BoxDecoration(color: Colors.blue),
                 );
               },
-              itemCount: 2,
-              shrinkWrap: true,
+              itemCount: 10,
+              shrinkWrap: true, separatorBuilder: (BuildContext context, int index)=>SizedBox(height: 10,),
             )
           ],
         ),
