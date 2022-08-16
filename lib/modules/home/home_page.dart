@@ -28,18 +28,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
+          SizedBox(height: MediaQuery.of(context).size.height,
             child: PageView(
               physics: NeverScrollableScrollPhysics(),
               controller: pageController,
               children: tabs,
             ),
           ),
-          AppButtonNavigationBar(
-            indexCallBack: (int index) => jumtToPage(index),
-          )
+          Positioned.fill(
+              child: Container(
+            alignment: Alignment.bottomCenter,
+            child: AppButtonNavigationBar(
+              indexCallBack: (int index) => jumtToPage(index),
+            ),
+          ))
         ],
       ),
     );

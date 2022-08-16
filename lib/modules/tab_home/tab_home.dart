@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabHome extends StatefulWidget {
   const TabHome({Key? key}) : super(key: key);
@@ -46,6 +47,7 @@ class _TabHomeState extends State<TabHome> {
               padding: EdgeInsets.all(10),
               child: Container(
                 height: size.height / 8,
+                width: size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   gradient: LinearGradient(
@@ -77,20 +79,20 @@ class _TabHomeState extends State<TabHome> {
                         SizedBox(
                           width: 20,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '12:00 Tuesday, 23th March',
-                              style: TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.w400),
-                            ),
-                            Text(
-                              'Murall Krakowska, Warszawa',
-                              style: TextStyle(fontWeight: FontWeight.w300),
-                            ),
-                          ],
-                        )
+              Expanded(child:           Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '12:00 Tuesday, 23th March',maxLines: 1,
+                    style: TextStyle(fontSize: 20.sp,
+                       fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    'Murall Krakowska, Warszawa',maxLines: 1,
+                    style: TextStyle(fontWeight: FontWeight.w300,fontSize: 12.sp),
+                  ),
+                ],
+              ))
                       ],
                     )
                   ],

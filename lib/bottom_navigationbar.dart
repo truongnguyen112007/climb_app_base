@@ -1,6 +1,7 @@
 import 'package:climb_app_base/components/gradient_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppButtonNavigationBar extends StatefulWidget {
   final Function(int index) indexCallBack;
@@ -24,27 +25,22 @@ class _AppButtonNavigationBarState extends State<AppButtonNavigationBar> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SizedBox(),
-        Padding(
-          padding: EdgeInsets.only(top: 30),
-          child: Align(
-            alignment: Alignment.center,
-            child: Container(
-              height: 60,
-              color: Colors.black,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  itemBottomNavigationBar(Icons.home_filled, TAB_HOME, 'home'),
-                  itemBottomNavigationBar(
-                      Icons.map_outlined, TAB_ROUTES, 'Routes'),
-                  const Expanded(child: SizedBox()),
-                  itemBottomNavigationBar(
-                      Icons.date_range_sharp, TAB_RESERVATIONS, 'Reservations'),
-                  itemBottomNavigationBar(
-                      Icons.person_outline_outlined, TAB_PROFILE, 'Profile'),
-                ],
-              ),
+        Container(color: Colors.transparent,
+       padding: EdgeInsets.only(top: 17.h),
+       height: 60.h,alignment: Alignment.bottomCenter,
+          child: Container(
+            color: Colors.black,
+            child: Row(
+              children: [
+                itemBottomNavigationBar(Icons.home_filled, TAB_HOME, 'home'),
+                itemBottomNavigationBar(
+                    Icons.map_outlined, TAB_ROUTES, 'Routes'),
+                const Expanded(child: SizedBox()),
+                itemBottomNavigationBar(
+                    Icons.date_range_sharp, TAB_RESERVATIONS, 'Reservations'),
+                itemBottomNavigationBar(
+                    Icons.person_outline_outlined, TAB_PROFILE, 'Profile'),
+              ],
             ),
           ),
         ),
@@ -83,18 +79,18 @@ class _AppButtonNavigationBarState extends State<AppButtonNavigationBar> {
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 4,
                     ),
                     Text("Climb",
-                        style: TextStyle(
+                        style: TextStyle(fontSize: 13.5.sp,
                             color: currentTab == TAB_CLIMB
                                 ? Colors.orange
                                 : Colors.grey)),
+                Spacer()
                   ],
                 ),
               ),
-              width: 80,
-              height: 90,
+              width: 80.w,
             ),
           ),
         ),
@@ -111,25 +107,28 @@ class _AppButtonNavigationBarState extends State<AppButtonNavigationBar> {
               widget.indexCallBack(currentTab);
             });
           },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GradientIcon(
-                size: 20,
-                icon: icon,
-                gradient: LinearGradient(
-                  colors: currentTab == index
-                      ? [Colors.red, Colors.orange]
-                      : [Colors.grey, Colors.grey],
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GradientIcon(
+                  size: 20,
+                  icon: icon,
+                  gradient: LinearGradient(
+                    colors: currentTab == index
+                        ? [Colors.red, Colors.orange]
+                        : [Colors.grey, Colors.grey],
+                  ),
                 ),
-              ),
-              Text(
-                title,
-                style: TextStyle(
-                    color: currentTab == index ? Colors.orange : Colors.grey,
-                    fontSize: 13.5),
-              ),
-            ],
+                Text(
+                  title,
+                  style: TextStyle(
+                      color: currentTab == index ? Colors.orange : Colors.grey,
+                      fontSize: 12.sp),
+                ),
+              ],
+            ),
           ),
         ),
       );
