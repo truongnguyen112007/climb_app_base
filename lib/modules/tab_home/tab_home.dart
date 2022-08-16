@@ -102,12 +102,7 @@ class _TabHomeState extends State<TabHome> {
             ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               primary: true,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  height: size.height / 4,
-                  decoration: BoxDecoration(color: Colors.blue),
-                );
-              },
+              itemBuilder: (BuildContext context, int index) =>itemListView(),
               itemCount: 10,
               shrinkWrap: true, separatorBuilder: (BuildContext context, int index)=>SizedBox(height: 10,),
             )
@@ -116,4 +111,10 @@ class _TabHomeState extends State<TabHome> {
       ),
     );
   }
+
+  Widget itemListView() => AspectRatio(
+      aspectRatio: 1 / 1.2,
+      child: Container(
+        decoration: BoxDecoration(color: Colors.blue),
+      ));
 }
