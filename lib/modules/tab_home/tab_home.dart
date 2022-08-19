@@ -1,6 +1,9 @@
+import 'package:climb_app_base/components/text_style.dart';
+import 'package:climb_app_base/data/feed_model.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../components/item_feed.dart';
 
 class TabHome extends StatefulWidget {
   const TabHome({Key? key}) : super(key: key);
@@ -10,10 +13,16 @@ class TabHome extends StatefulWidget {
 }
 
 class _TabHomeState extends State<TabHome> {
+  var listInfo = [
+    FeedModel(true),
+    FeedModel(false),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color(0xFF282D2F),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('RECLIMB'),
@@ -23,7 +32,7 @@ class _TabHomeState extends State<TabHome> {
             icon: Icon(Icons.search),
           ),
           SizedBox(
-            width: 15,
+            width: 15.w,
           ),
           SizedBox(
             child: Badge(
@@ -45,66 +54,82 @@ class _TabHomeState extends State<TabHome> {
           children: [
             Padding(
               padding: EdgeInsets.all(10),
-              child: Container(
-                height: size.height / 8,
-                width: size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.orange, Colors.red],
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        'NEXT CLIMB',
-                        style: TextStyle(color: Colors.white70, fontSize: 12),
-                      ),
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  height: size.height / 8,
+                  width: size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.orange, Colors.red],
                     ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 10,
-                        ),
-                        FloatingActionButton(
-                          onPressed: () {},
-                          child: Icon(Icons.add),
-                          backgroundColor: Colors.yellow,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-              Expanded(child:           Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '12:00 Tuesday, 23th March',maxLines: 1,
-                    style: TextStyle(fontSize: 20.sp,
-                       fontWeight: FontWeight.w400),
                   ),
-                  Text(
-                    'Murall Krakowska, Warszawa',maxLines: 1,
-                    style: TextStyle(fontWeight: FontWeight.w300,fontSize: 12.sp),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Text(
+                          'NEXT CLIMB',
+                          style: TextStyle(color: Colors.white70, fontSize: 12),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          Container(
+                            width: 40.w,
+                            height: 40.h,
+                            decoration: BoxDecoration(
+                                color: Colors.greenAccent,
+                                borderRadius: BorderRadius.circular(100)),
+                          ),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AppText(
+                                  msg: '12:00 Tuesday, 23th March',
+                                  style: TextStyle(
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w400),
+                                  maxLine: 1,
+                                ),
+                                AppText(
+                                  msg: 'Murall Krakowska, Warszawa',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 12.sp),
+                                  maxLine: 1,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                ],
-              ))
-                      ],
-                    )
-                  ],
                 ),
               ),
             ),
             ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               primary: true,
-              itemBuilder: (BuildContext context, int index) =>itemListView(),
-              itemCount: 10,
-              shrinkWrap: true, separatorBuilder: (BuildContext context, int index)=>SizedBox(height: 10,),
+              itemBuilder: (BuildContext context, int index) =>
+                  itemListView(size, listInfo[index]),
+              itemCount: listInfo.length,
+              shrinkWrap: true,
+              separatorBuilder: (BuildContext context, int index) => SizedBox(
+                height: 1,
+              ),
             )
           ],
         ),
@@ -112,9 +137,5 @@ class _TabHomeState extends State<TabHome> {
     );
   }
 
-  Widget itemListView() => AspectRatio(
-      aspectRatio: 1 / 1.2,
-      child: Container(
-        decoration: BoxDecoration(color: Colors.blue),
-      ));
+  Widget itemListView(Size size, FeedModel model) => ItemFeed(model: model,);
 }

@@ -1,4 +1,6 @@
+import 'package:climb_app_base/components/gradient_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../tab_climb/tab_climb.dart';
 import '../tab_home/tab_home.dart';
 import '../tab_profile/tab_profile.dart';
@@ -23,6 +25,13 @@ class _HomePageState extends State<HomePage> {
     TabProfile()
   ];
 
+
+  static const TAB_HOME = 0;
+  static const TAB_ROUTES = 1;
+  static const TAB_CLIMB = 2;
+  static const TAB_RESERVATIONS = 3;
+  static const TAB_PROFILE = 4;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -32,20 +41,59 @@ class _HomePageState extends State<HomePage> {
           bottomNavigationBar: BottomNavigationBar(
             unselectedItemColor: Colors.grey,
             backgroundColor: Colors.black,
+            iconSize: 22,
             type: BottomNavigationBarType.fixed,
+            selectedItemColor: Colors.orange,selectedLabelStyle: TextStyle(fontSize: 13),
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_filled),
-                  label: 'Home',
-                  backgroundColor: Colors.black),
+                  icon: GradientIcon(
+                    gradient: LinearGradient(
+                      colors: _currentIndex == TAB_HOME
+                          ? [Colors.red, Colors.orange]
+                          : [Colors.grey, Colors.grey],
+                    ),
+                    size: 22,
+                    icon: Icons.home_filled,
+                  ),
+                  label: 'Home'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_filled), label: 'Home'),
+                  icon: GradientIcon(
+                    gradient: LinearGradient(
+                      colors: _currentIndex == TAB_ROUTES
+                          ? [Colors.red, Colors.orange]
+                          : [Colors.grey, Colors.grey],
+                    ),
+                    size: 22,
+                    icon: Icons.map,
+                  ),
+                  label: 'Routes'),
+              BottomNavigationBarItem(icon:GradientIcon(
+                gradient: LinearGradient(
+                  colors: [Colors.transparent, Colors.transparent],
+                ),
+                size: 22,
+                icon: Icons.map,
+              ), label: 'Climb'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_filled), label: 'Home'),
+                  icon: GradientIcon(
+                    gradient: LinearGradient(
+                      colors: _currentIndex == TAB_RESERVATIONS
+                          ? [Colors.red, Colors.orange]
+                          : [Colors.grey, Colors.grey],
+                    ),
+                    size: 22,
+                    icon: Icons.date_range_outlined,
+                  ), label: 'Reservations'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_filled), label: 'Home'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home_filled), label: 'Home'),
+                  icon: GradientIcon(
+                    gradient: LinearGradient(
+                      colors: _currentIndex == TAB_PROFILE
+                          ? [Colors.red, Colors.orange]
+                          : [Colors.grey, Colors.grey],
+                    ),
+                    size: 22,
+                    icon: Icons.person_outline_outlined,
+                  ), label: 'Profile'),
             ],
             currentIndex: _currentIndex,
             onTap: (index) {
@@ -59,8 +107,8 @@ class _HomePageState extends State<HomePage> {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 50,
-              width: 80,
+              height: 45.h,
+              width: 80.w,
               margin: EdgeInsets.only(bottom: 25),
               decoration: BoxDecoration(
                 color: Colors.black,
@@ -70,11 +118,16 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               child: MaterialButton(
-                child: Icon(
-                  Icons.account_balance_rounded,
-                  color: _currentIndex == 2 ? Colors.blue : Colors.white70,
+                child: GradientIcon(
+                  gradient: LinearGradient(
+                    colors: _currentIndex == TAB_CLIMB
+                        ? [Colors.red, Colors.orange]
+                        : [Colors.grey, Colors.grey],
+                  ),
+                  size: 22,
+                  icon: Icons.rocket_launch_outlined,
                 ),
-                onPressed: () =>onTabTapped(2),
+                onPressed: () => onTabTapped(2),
                 splashColor: Colors.transparent,
               ),
             ),
@@ -82,47 +135,7 @@ class _HomePageState extends State<HomePage> {
         )
       ],
     );
-    return Scaffold(
-      body: tab[_currentIndex],
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(top: 25),
-        child: Container(
-          width: 65,
-          height: 65,
-          child: FloatingActionButton(
-            onPressed: () {
-              onTabTapped(2);
-            },
-            child: Icon(Icons.heart_broken),
-            backgroundColor: Colors.black,
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_filled),
-              label: 'Home',
-              backgroundColor: Colors.black),
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
-        ],
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
-    );
   }
-
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
