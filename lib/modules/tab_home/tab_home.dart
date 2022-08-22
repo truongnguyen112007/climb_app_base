@@ -20,6 +20,49 @@ class _TabHomeState extends State<TabHome> {
     FeedModel(false, '', photoURL: 'assets/images/img.png'),
   ];
 
+  bool loading = false;
+
+  bool readEnd = false;
+
+  int nextPage = 0;
+
+  @override
+  void initState() {
+    listInfo.addAll([
+      FeedModel(true,
+          'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'),
+      FeedModel(false, '', photoURL: 'assets/images/img.png'),
+    ]);
+    super.initState();
+    controller.addListener(() {
+      var maxScroll = controller.position.maxScrollExtent;
+      var currentScroll = controller.position.pixels;
+      if (maxScroll - currentScroll <= 200 && loading == false && !readEnd) {
+        fetch();
+      }
+    });
+  }
+
+  Future fetch() async {
+    loading = true;
+    setState(() {});
+    await Future.delayed(
+      Duration(milliseconds: 2500),
+    );
+    setState(() {
+      loading = false;
+      listInfo.addAll([
+        FeedModel(true,
+            'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'),
+        FeedModel(false,'', photoURL: 'assets/images/img.png'),
+      ]);
+      nextPage++;
+      if (nextPage == 2) {
+        readEnd = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -130,11 +173,14 @@ class _TabHomeState extends State<TabHome> {
                 if (index < listInfo.length) {
                   return ItemFeed(model: listInfo[index]);
                 }
-                return SizedBox(height: 10.h,width: 20.w,child: CircularProgressIndicator(
-                ),);
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.amber,
+                  ),
+                );
               },
               // itemListView(size, listInfo[index]),
-              itemCount: listInfo.length + 1,
+              itemCount: loading ? listInfo.length + 1 : listInfo.length,
               shrinkWrap: true,
               separatorBuilder: (BuildContext context, int index) => SizedBox(
                 height: 1,

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GradientIcon extends StatelessWidget {
-  GradientIcon(
+   GradientIcon(
   { required this.icon,
     required  this.size,
     required  this.gradient,}
