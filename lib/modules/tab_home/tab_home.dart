@@ -13,9 +13,11 @@ class TabHome extends StatefulWidget {
 }
 
 class _TabHomeState extends State<TabHome> {
+  final controller = ScrollController();
   var listInfo = [
-    FeedModel(true),
-    FeedModel(false),
+    FeedModel(true,
+        'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'),
+    FeedModel(false, '', photoURL: 'assets/images/img.png'),
   ];
 
   @override
@@ -37,18 +39,19 @@ class _TabHomeState extends State<TabHome> {
           SizedBox(
             child: Badge(
               padding: EdgeInsets.all(2),
-              position: BadgePosition.topEnd(top: 13, end: -2),
+              position: BadgePosition.topEnd(top: 13.h, end: -2.h),
               toAnimate: false,
               badgeContent: Text('1'),
               child: Icon(Icons.notifications_none_sharp),
             ),
           ),
           SizedBox(
-            width: 20,
+            width: 20.w,
           ),
         ],
       ),
       body: SingleChildScrollView(
+        controller: controller,
         physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
@@ -123,9 +126,15 @@ class _TabHomeState extends State<TabHome> {
             ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               primary: true,
-              itemBuilder: (BuildContext context, int index) =>
-                  itemListView(size, listInfo[index]),
-              itemCount: listInfo.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (index < listInfo.length) {
+                  return ItemFeed(model: listInfo[index]);
+                }
+                return SizedBox(height: 10.h,width: 20.w,child: CircularProgressIndicator(
+                ),);
+              },
+              // itemListView(size, listInfo[index]),
+              itemCount: listInfo.length + 1,
               shrinkWrap: true,
               separatorBuilder: (BuildContext context, int index) => SizedBox(
                 height: 1,
@@ -137,5 +146,7 @@ class _TabHomeState extends State<TabHome> {
     );
   }
 
-  Widget itemListView(Size size, FeedModel model) => ItemFeed(model: model,);
+  Widget itemListView(Size size, FeedModel model) => ItemFeed(
+        model: model,
+      );
 }

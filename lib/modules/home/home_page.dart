@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
             selectedItemColor: Colors.orange,selectedLabelStyle: TextStyle(fontSize: 13),
             items: [
               BottomNavigationBarItem(
+
                   icon: GradientIcon(
                     gradient: LinearGradient(
                       colors: _currentIndex == TAB_HOME
@@ -118,6 +119,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               child: MaterialButton(
+                highlightColor: Colors.transparent,
                 child: GradientIcon(
                   gradient: LinearGradient(
                     colors: _currentIndex == TAB_CLIMB

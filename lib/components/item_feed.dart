@@ -1,3 +1,4 @@
+import 'package:climb_app_base/components/app_like_button.dart';
 import 'package:climb_app_base/components/text_style.dart';
 import 'package:climb_app_base/components/video_app.dart';
 import 'package:climb_app_base/data/feed_model.dart';
@@ -14,6 +15,7 @@ class ItemFeed extends StatefulWidget {
 }
 
 class _ItemFeedState extends State<ItemFeed> {
+  bool isLike = false;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -108,11 +110,10 @@ class _ItemFeedState extends State<ItemFeed> {
                 ],
               ),
             ),
-            Container(
-              color: Colors.blue,
-              height: size.height / 4,
-              child: VideoApp(),
-            ),
+          widget.model.videoURL.isNotEmpty ? VideoApp(model: widget.model): widget.model.photoURL != null &&
+                        widget.model.photoURL!.isNotEmpty
+                    ? Image.asset(widget.model.photoURL ?? '')
+                    : SizedBox(),
             Container(
               height: size.height / 10,
               decoration: BoxDecoration(
@@ -304,27 +305,9 @@ class _ItemFeedState extends State<ItemFeed> {
               padding: EdgeInsets.only(left: 20),
               child: Row(
                 children: [
-                  Column(
+                  Row(
                     children: [
-                      Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            '5',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 5.w,
-                          ),
-                          Text(
-                            'likes',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
+                     AppLikeButton(),
                     ],
                   ),
                   SizedBox(
