@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class VideoApp extends StatefulWidget {
   final FeedModel model;
-
   const VideoApp({Key? key, required this.model}) : super(key: key);
 
   @override
@@ -13,16 +12,16 @@ class VideoApp extends StatefulWidget {
 }
 
 class _VideoAppState extends State<VideoApp> {
-  ChewieController? _chewieController;
   VideoPlayerController? _videoPlayerController;
-  var visiblePlay = true;
+  ChewieController? _chewieController;
 
   @override
   void initState() {
     super.initState();
-    _videoPlayerController =
-        VideoPlayerController.network(widget.model.videoURL)
-          ..initialize().then((_) {});
+    _videoPlayerController = VideoPlayerController.network(
+        widget.model.videoURL)
+      ..initialize().then((_) {
+      });
     _chewieController =
         ChewieController(videoPlayerController: _videoPlayerController!);
   }
@@ -36,14 +35,12 @@ class _VideoAppState extends State<VideoApp> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-        aspectRatio: _videoPlayerController!.value.aspectRatio,
-        child: _chewieVideoPlayer());
+    return Scaffold(
+      body: _chewieVideoPlayer(),
+    );
   }
 
   Widget _chewieVideoPlayer() {
-    return Chewie(
-      controller: _chewieController!,
-    );
+    return Container(child: Chewie(controller: _chewieController!));
   }
 }

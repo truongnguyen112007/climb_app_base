@@ -16,7 +16,7 @@ class _TabHomeState extends State<TabHome> {
   final controller = ScrollController();
   var listInfo = [
     FeedModel(true,
-        'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'),
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'),
     FeedModel(false, '', photoURL: 'assets/images/img.png'),
   ];
 
@@ -30,7 +30,7 @@ class _TabHomeState extends State<TabHome> {
   void initState() {
     listInfo.addAll([
       FeedModel(true,
-          'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'),
+          'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'),
       FeedModel(false, '', photoURL: 'assets/images/img.png'),
     ]);
     super.initState();

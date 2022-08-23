@@ -1,5 +1,6 @@
 import 'package:climb_app_base/components/app_like_button.dart';
 import 'package:climb_app_base/components/text_style.dart';
+import 'package:climb_app_base/components/thumbnail_app.dart';
 import 'package:climb_app_base/components/video_app.dart';
 import 'package:climb_app_base/data/feed_model.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class ItemFeed extends StatefulWidget {
 
 class _ItemFeedState extends State<ItemFeed> {
   bool isLike = false;
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -110,7 +112,11 @@ class _ItemFeedState extends State<ItemFeed> {
                 ],
               ),
             ),
-          widget.model.videoURL.isNotEmpty ? VideoApp(model: widget.model): widget.model.photoURL != null &&
+            widget.model.videoURL.isNotEmpty
+                ? ThumbnailApp(callbackOpenVideo: () {                     Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  VideoApp(model: widget.model,))); },) /*VideoApp(model: widget.model)*/
+                : widget.model.photoURL != null &&
                         widget.model.photoURL!.isNotEmpty
                     ? Image.asset(widget.model.photoURL ?? '')
                     : SizedBox(),
@@ -162,8 +168,8 @@ class _ItemFeedState extends State<ItemFeed> {
                             children: [
                               AppText(
                                 msg: 'Routes 12m',
-                                style:
-                                    TextStyle(color: Colors.grey[400], fontSize: 15),
+                                style: TextStyle(
+                                    color: Colors.grey[400], fontSize: 15),
                               ),
                               SizedBox(
                                 width: 10.w,
@@ -178,8 +184,8 @@ class _ItemFeedState extends State<ItemFeed> {
                               ),
                               AppText(
                                 msg: 'Adam Kowalski',
-                                style:
-                                    TextStyle(color: Colors.grey[400], fontSize: 15),
+                                style: TextStyle(
+                                    color: Colors.grey[400], fontSize: 15),
                               ),
                             ],
                           ),
@@ -307,7 +313,7 @@ class _ItemFeedState extends State<ItemFeed> {
                 children: [
                   Row(
                     children: [
-                     AppLikeButton(),
+                      AppLikeButton(),
                     ],
                   ),
                   SizedBox(
