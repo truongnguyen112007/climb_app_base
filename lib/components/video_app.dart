@@ -35,6 +35,8 @@ class _VideoAppState extends State<VideoApp> {
       child: AspectRatio(
           child: GestureDetector(
             onTap: () {
+              print(" _controller.value.isPlaying: ${ _controller.value.isPlaying}");
+              if(! _controller.value.isPlaying) return;
               setState(() {
                 visiblePlay = true;
                 timer1?.cancel();
@@ -58,8 +60,9 @@ class _VideoAppState extends State<VideoApp> {
                               ? _controller.pause()
                               : _controller.play();
                           timer?.cancel();
+                          timer1?.cancel();
                           timer =
-                              Timer.periodic(const Duration(seconds: 3), (t) {
+                              Timer.periodic(const Duration(seconds:5), (t) {
                             visiblePlay =
                                 _controller.value.isPlaying ? false : true;
                             setState(() {});
