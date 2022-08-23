@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:chewie/chewie.dart';
 import 'package:climb_app_base/data/feed_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
@@ -14,81 +13,37 @@ class VideoApp extends StatefulWidget {
 }
 
 class _VideoAppState extends State<VideoApp> {
-  late VideoPlayerController _controller;
+  ChewieController? _chewieController;
+  VideoPlayerController? _videoPlayerController;
   var visiblePlay = true;
-  Timer? timer;
-  Timer? timer1;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(widget.model.videoURL)
-      ..initialize().then((_) {
-        setState(() {});
-      });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: AspectRatio(
-          child: GestureDetector(
-            onTap: () {
-              print(" _controller.value.isPlaying: ${ _controller.value.isPlaying}");
-              if(! _controller.value.isPlaying) return;
-              setState(() {
-                visiblePlay = true;
-                timer1?.cancel();
-                timer1 =
-                    Timer.periodic(const Duration(seconds:5), (t) {
-                      visiblePlay =
-                      _controller.value.isPlaying ? false : true;
-                    });
-              });
-            },
-            child: Stack(
-              children: [
-                _controller.value.isInitialized
-                    ? VideoPlayer(_controller)
-                    : Container(),
-                Center(
-                  child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                          timer?.cancel();
-                          timer1?.cancel();
-                          timer =
-                              Timer.periodic(const Duration(seconds:5), (t) {
-                            visiblePlay =
-                                _controller.value.isPlaying ? false : true;
-                            setState(() {});
-                          });
-                        });
-                      },
-                      child: visiblePlay
-                          ? Icon(
-                              _controller.value.isPlaying
-                                  ? Icons.pause
-                                  : Icons.play_circle_outline_rounded,
-                              size: 80,
-                              color: Colors.white,
-                            )
-                          : SizedBox()),
-                )
-              ],
-            ),
-          ),
-          aspectRatio: _controller.value.aspectRatio),
-    );
+    _videoPlayerController =
+        VideoPlayerController.network(widget.model.videoURL)
+          ..initialize().then((_) {});
+    _chewieController =
+        ChewieController(videoPlayerController: _videoPlayerController!);
   }
 
   @override
   void dispose() {
+    _videoPlayerController!.dispose();
+    _chewieController!.dispose();
     super.dispose();
-    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+        aspectRatio: _videoPlayerController!.value.aspectRatio,
+        child: _chewieVideoPlayer());
+  }
+
+  Widget _chewieVideoPlayer() {
+    return Chewie(
+      controller: _chewieController!,
+    );
   }
 }
