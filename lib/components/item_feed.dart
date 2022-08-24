@@ -113,9 +113,16 @@ class _ItemFeedState extends State<ItemFeed> {
               ),
             ),
             widget.model.videoURL.isNotEmpty
-                ? ThumbnailApp(callbackOpenVideo: () {                     Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>  VideoApp(model: widget.model,))); },) /*VideoApp(model: widget.model)*/
+                ? ThumbnailApp(
+                    callbackOpenVideo: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VideoApp(
+                                    model: widget.model,
+                                  )));
+                    },
+                  ) /*VideoApp(model: widget.model)*/
                 : widget.model.photoURL != null &&
                         widget.model.photoURL!.isNotEmpty
                     ? Image.asset(widget.model.photoURL ?? '')

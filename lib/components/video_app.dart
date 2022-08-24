@@ -1,7 +1,8 @@
-import 'package:chewie/chewie.dart';
 import 'package:climb_app_base/data/feed_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
+
+import 'chwie/src/chewie_player.dart';
 
 class VideoApp extends StatefulWidget {
   final FeedModel model;
