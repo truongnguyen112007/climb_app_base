@@ -52,13 +52,15 @@ class _SearchPageState extends State<SearchPage> {
           body: Column(
             children: [
               Container(
+                padding: EdgeInsets.only(bottom: 20.h),
                 color: Colors.black,
-                height: size.height / 3.7,
                 child: Column(
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsets.only(top: 45.h, right: 10.w, left: 10.w),
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).padding.top + 10.w,
+                          right: 10.w,
+                          left: 10.w),
                       child: Row(
                         children: [
                           InkWell(
