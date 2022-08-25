@@ -1,3 +1,4 @@
+
 import 'package:climb_app_base/components/item_places.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,14 +38,16 @@ class _TabPlacesState extends State<TabPlaces> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
-      color: Color(0xFF282D2F),
+      color: /*Color(0xFF282D2F)*/Colors.blue,
       child: Stack(
         children: [
-         ListView.separated(shrinkWrap: true,
+          ListView.separated(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(top: 10),
             itemBuilder: (BuildContext context, int index){
               return ItemPlaces();
-            }, separatorBuilder: (BuildContext context, int index)=>SizedBox(height: 10.h,), itemCount:6,
-         ),
+            }, separatorBuilder: (BuildContext context, int index)=>SizedBox(height: 10.h,), itemCount:1,
+          ),
           Container(
             padding: EdgeInsets.only(bottom: 20.h),
             alignment: Alignment.bottomCenter,
