@@ -6,6 +6,7 @@ import 'chwie/src/chewie_player.dart';
 
 class VideoApp extends StatefulWidget {
   final FeedModel model;
+
   const VideoApp({Key? key, required this.model}) : super(key: key);
 
   @override
@@ -19,12 +20,15 @@ class _VideoAppState extends State<VideoApp> {
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.network(
-        widget.model.videoURL)
-      ..initialize().then((_) {
-      });
-    _chewieController =
-        ChewieController(videoPlayerController: _videoPlayerController!);
+    _videoPlayerController =
+        VideoPlayerController.network(widget.model.videoURL);
+    _videoPlayerController!.initialize().then((_) {
+      _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController!,
+        looping: true,
+      );
+      setState((){});
+    });
   }
 
   @override
@@ -42,6 +46,8 @@ class _VideoAppState extends State<VideoApp> {
   }
 
   Widget _chewieVideoPlayer() {
-    return Container(child: Chewie(controller: _chewieController!));
+    return _chewieController != null && _videoPlayerController != null ?
+    Container(child: Chewie(controller: _chewieController!),) : Center(
+      child: Text("Please wait"),);
   }
 }

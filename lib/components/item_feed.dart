@@ -3,6 +3,7 @@ import 'package:climb_app_base/components/text_style.dart';
 import 'package:climb_app_base/components/thumbnail_app.dart';
 import 'package:climb_app_base/components/video_app.dart';
 import 'package:climb_app_base/data/feed_model.dart';
+import 'package:climb_app_base/utils/navigator_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -115,14 +116,13 @@ class _ItemFeedState extends State<ItemFeed> {
             widget.model.videoURL.isNotEmpty
                 ? ThumbnailApp(
                     callbackOpenVideo: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => VideoApp(
-                                    model: widget.model,
-                                  )));
+                      NavigatorUtils.moveBottomToTop(
+                          VideoApp(
+                            model: widget.model,
+                          ),
+                          context);
                     },
-                  ) /*VideoApp(model: widget.model)*/
+                  )
                 : widget.model.photoURL != null &&
                         widget.model.photoURL!.isNotEmpty
                     ? Image.asset(widget.model.photoURL ?? '')

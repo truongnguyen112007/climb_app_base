@@ -1,12 +1,15 @@
 import 'package:climb_app_base/components/text_style.dart';
 import 'package:climb_app_base/data/feed_model.dart';
+import 'package:climb_app_base/modules/search_page/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../components/item_feed.dart';
+import '../../utils/navigator_utils.dart';
 
 class TabHome extends StatefulWidget {
+
   const TabHome({Key? key}) : super(key: key);
 
   @override
@@ -74,7 +77,11 @@ class _TabHomeState extends State<TabHome> {
         title: Text('RECLIMB'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              NavigatorUtils.moveBottomToTop(
+                  SearchPage(),
+                  context);
+            },
             icon: Icon(Icons.search),
           ),
           SizedBox(

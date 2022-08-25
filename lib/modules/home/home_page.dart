@@ -8,7 +8,6 @@ import '../tab_profile/tab_profile.dart';
 import '../tab_reservations/tab_reservations.dart';
 import '../tab_routes/tab_routes.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -27,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     TabProfile()
   ];
 
-
   static const TAB_HOME = 0;
   static const TAB_ROUTES = 1;
   static const TAB_CLIMB = 2;
@@ -45,10 +43,10 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.black,
             iconSize: 22,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: Colors.orange,selectedLabelStyle: TextStyle(fontSize: 13),
+            selectedItemColor: Colors.orange,
+            selectedLabelStyle: TextStyle(fontSize: 13),
             items: [
               BottomNavigationBarItem(
-
                   icon: GradientIcon(
                     gradient: LinearGradient(
                       colors: _currentIndex == TAB_HOME
@@ -70,13 +68,15 @@ class _HomePageState extends State<HomePage> {
                     icon: Icons.map,
                   ),
                   label: 'Routes'),
-              BottomNavigationBarItem(icon:GradientIcon(
-                gradient: LinearGradient(
-                  colors: [Colors.transparent, Colors.transparent],
-                ),
-                size: 22,
-                icon: Icons.map,
-              ), label: 'Climb'),
+              BottomNavigationBarItem(
+                  icon: GradientIcon(
+                    gradient: LinearGradient(
+                      colors: [Colors.transparent, Colors.transparent],
+                    ),
+                    size: 22,
+                    icon: Icons.map,
+                  ),
+                  label: 'Climb'),
               BottomNavigationBarItem(
                   icon: GradientIcon(
                     gradient: LinearGradient(
@@ -86,7 +86,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     size: 22,
                     icon: Icons.date_range_outlined,
-                  ), label: 'Reservations'),
+                  ),
+                  label: 'Reservations'),
               BottomNavigationBarItem(
                   icon: GradientIcon(
                     gradient: LinearGradient(
@@ -96,7 +97,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     size: 22,
                     icon: Icons.person_outline_outlined,
-                  ), label: 'Profile'),
+                  ),
+                  label: 'Profile'),
             ],
             currentIndex: _currentIndex,
             onTap: (index) {
@@ -140,6 +142,7 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;

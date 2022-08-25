@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:climb_app_base/components/video_app.dart';
-import 'package:climb_app_base/data/feed_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -40,7 +38,6 @@ class _ThumbnailAppState extends State<ThumbnailApp> {
             "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
         thumbnailPath: (await getTemporaryDirectory()).path,
         imageFormat: ImageFormat.WEBP);
-    print("TAGb _thumbnailUrl: $_thumbnailUrl");
 
     setState(() {});
   }
