@@ -58,16 +58,20 @@ class _TabPlacesState extends State<TabPlaces> {
   bool isShowMap = false;
   Completer<GoogleMapController> _controller = Completer();
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  late CameraPosition _kGooglePlex;
+  final Set<Marker> markers = new Set();
 
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  @override
+  void initState() {
+    _kGooglePlex = CameraPosition(
+        target: LatLng(lPlaces[0].lat, lPlaces[0].lng), zoom: 15);
+    for (int i = 0; i < lPlaces.length; i++) {
+      markers.add(Marker(
+          markerId: MarkerId(i.toString()),
+          position: LatLng(lPlaces[i].lat, lPlaces[i].lng)));
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +95,11 @@ class _TabPlacesState extends State<TabPlaces> {
             visible: !isShowMap,
           ),
           GoogleMap(
-            mapType: MapType.hybrid,
+            markers: markers,
+            zoomControlsEnabled: true,
+            zoomGesturesEnabled: true,
+            scrollGesturesEnabled: true,
+            mapType: MapType.normal,
             initialCameraPosition: _kGooglePlex,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
@@ -101,8 +109,10 @@ class _TabPlacesState extends State<TabPlaces> {
             padding: EdgeInsets.only(bottom: 20.h),
             alignment: Alignment.bottomCenter,
             child: OutlinedButton(
-              onPressed: () {isShowMap =!isShowMap;
-                setState((){});},
+              onPressed: () {
+                isShowMap = !isShowMap;
+                setState(() {});
+              },
               style: ButtonStyle(
                 side: MaterialStateProperty.all(
                   BorderSide(color: Colors.deepOrange, width: 1),

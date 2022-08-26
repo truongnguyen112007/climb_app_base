@@ -215,7 +215,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
               Expanded(
-                child: PageView(
+                child: PageView(physics: NeverScrollableScrollPhysics(),
                   controller: pageController,
                   children: [
                     TabAll(),
