@@ -98,6 +98,8 @@ class _SearchPageState extends State<SearchPage> {
                           cursorHeight: 25.h,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
+                            hintText: 'Find places, route, climbes',
+                            hintStyle: TextStyle(color: Colors.white30),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent),
                               borderRadius: BorderRadius.circular(30),
@@ -286,6 +288,7 @@ class _SearchPageState extends State<SearchPage> {
             // height: size.height/3,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
                 padding: EdgeInsets.only(
@@ -322,7 +325,9 @@ class _SearchPageState extends State<SearchPage> {
                       height: 40.h,
                       child: Row(
                         children: [
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           AppText(
                             msg: selectedValue ?? '',
                             style: TextStyle(color: Colors.white),
@@ -335,9 +340,10 @@ class _SearchPageState extends State<SearchPage> {
                         ],
                       ),
                       decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(width: 1, color: Colors.red)),
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(width: 1, color: Colors.white24),
+                      ),
                     ),
                     isExpanded: true,
                     items: itemCity
@@ -362,10 +368,14 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               ),
-              AppText(msg: ''),
-              Row(
-                children: [],
-              )
+              AppText(
+                msg: 'Wall Height',
+                style: TextStyle(color: Colors.white70,fontSize: 20),
+              ),
+              AppText(
+                msg: 'Holds set',
+                style: TextStyle(color: Colors.white70,fontSize: 20),
+              ),
             ],
           ),
         );
