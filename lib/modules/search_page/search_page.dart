@@ -35,11 +35,7 @@ final List<String> holdSet = [
   'Custom',
 ];
 
-final List<String> itemCity = [
-  'item1',
-  'item2',
-  'item3'
-];
+final List<String> itemCity = ['item1', 'item2', 'item3'];
 
 class _SearchPageState extends State<SearchPage> {
   String? selectedValue;
@@ -65,137 +61,174 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.only(bottom: 20.h),
-                color: Colors.black,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top + 10.w,
-                          right: 10.w,
-                          left: 10.w),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              NavigatorUtils.back(context);
-                            },
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.grey,
-                              size: 30,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          Expanded(
-                            child: TextField(
-                              controller: textEditingController,
-                              autofocus: true,
-                              cursorColor: Colors.deepOrange,
-                              cursorHeight: 25.h,
-                              style: TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white24,
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.only(left: 10.w),
-                                  child: Icon(
-                                    Icons.search_outlined,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                suffixIcon: InkWell(
-                                  onTap: () {
-                                    clearText();
-                                  },
-                                  child: Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Container(
-                      height: size.height / 19.h,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: search.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              pageController.jumpToPage(index);
-                              setState(() {
-                                selectedIndex = index;
-                              });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.only(left: 17.w, right: 17.w),
-                              margin: EdgeInsets.only(left: 6.w),
-                              alignment: Alignment.center,
-                              decoration: selectedIndex == index
-                                  ? BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [Colors.orange, Colors.red],
-                                      ),
-                                    )
-                                  : BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: Colors.white24),
-                              child: Text(
-                                search[index],
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          );
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(bottom: 20.h),
+            color: Colors.black,
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).padding.top + 10.w,
+                      right: 10.w,
+                      left: 10.w),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          NavigatorUtils.back(context);
                         },
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.grey,
+                          size: 30,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Divider(
-                      thickness: 1,
-                      color: Colors.white24,
-                    ),
-                    isShowMap
-                        ? Align(
-                            alignment: Alignment.center,
-                            child: InkWell(
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: textEditingController,
+                          autofocus: true,
+                          cursorColor: Colors.deepOrange,
+                          cursorHeight: 25.h,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white24,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.only(left: 10.w),
+                              child: Icon(
+                                Icons.search_outlined,
+                                color: Colors.white,
+                              ),
+                            ),
+                            suffixIcon: InkWell(
                               onTap: () {
-                                filterDialog(context);
-                                Utils.fireEvent(
-                                  HideMapEvent(),
-                                );
+                                clearText();
                               },
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Container(
+                  height: size.height / 19.h,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: search.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          pageController.jumpToPage(index);
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(left: 17.w, right: 17.w),
+                          margin: EdgeInsets.only(left: 6.w),
+                          alignment: Alignment.center,
+                          decoration: selectedIndex == index
+                              ? BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [Colors.orange, Colors.red],
+                                  ),
+                                )
+                              : BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white24),
+                          child: Text(
+                            search[index],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: Colors.white24,
+                ),
+                isShowMap
+                    ? Align(
+                        alignment: Alignment.center,
+                        child: InkWell(
+                          onTap: () {
+                            filterDialog(context);
+                            Utils.fireEvent(
+                              HideMapEvent(),
+                            );
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.filter_alt_outlined,
+                                color: Colors.white,
+                              ),
+                              AppText(
+                                msg: 'Filter',
+                                style: TextStyle(color: Colors.white54),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.only(
+                          left: 10.w,
+                          right: 15.w,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () {},
                               child: Row(
-                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.swap_vert,
+                                    color: Colors.white,
+                                  ),
+                                  AppText(
+                                    msg: 'Sort',
+                                    style: TextStyle(color: Colors.white54),
+                                  )
+                                ],
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Row(
                                 children: [
                                   Icon(
                                     Icons.filter_alt_outlined,
@@ -204,78 +237,39 @@ class _SearchPageState extends State<SearchPage> {
                                   AppText(
                                     msg: 'Filter',
                                     style: TextStyle(color: Colors.white54),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
-                          )
-                        : Padding(
-                            padding: EdgeInsets.only(
-                              left: 10.w,
-                              right: 15.w,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  onTap: () {},
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.swap_vert,
-                                        color: Colors.white,
-                                      ),
-                                      AppText(
-                                        msg: 'Sort',
-                                        style: TextStyle(color: Colors.white54),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {},
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.filter_alt_outlined,
-                                        color: Colors.white,
-                                      ),
-                                      AppText(
-                                        msg: 'Filter',
-                                        style: TextStyle(color: Colors.white54),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                AppText(
-                                  msg: 'Select',
-                                  style: TextStyle(color: Colors.white54),
-                                )
-                              ],
-                            ),
-                          ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: PageView(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: pageController,
-                  children: [
-                    TabAll(),
-                    TabPlaces(
-                      onCallBackShowMap: (isShowMap) {
-                        this.isShowMap = isShowMap;
-                        setState(() {});
-                      },
-                    ),
-                    TabRouteSearch(),
-                    TabPersons(),
-                  ],
-                ),
-              ),
-            ],
+                            AppText(
+                              msg: 'Select',
+                              style: TextStyle(color: Colors.white54),
+                            )
+                          ],
+                        ),
+                      ),
+              ],
+            ),
           ),
+          Expanded(
+            child: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: pageController,
+              children: [
+                TabAll(),
+                TabPlaces(
+                  onCallBackShowMap: (isShowMap) {
+                    this.isShowMap = isShowMap;
+                    setState(() {});
+                  },
+                ),
+                TabRouteSearch(),
+                TabPersons(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -320,30 +314,36 @@ class _SearchPageState extends State<SearchPage> {
                 thickness: 1,
                 color: Colors.white24,
               ),
-              Center(
+              Padding(
+                padding: EdgeInsets.only(left: 20.w,right: 20.w),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton2(
-                    isExpanded: true, items: itemCity
-                      .map((item) =>
-                      DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            fontSize: 14,
+                    customButton: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(20),
+                        border: Border.all(width: 25,color: Colors.white24)),
+                    ),
+                    isExpanded: true,
+                    items: itemCity
+                        .map(
+                          (item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),)
-                      .toList(),
+                        )
+                        .toList(),
                     value: selectedValue,
-                      onChanged: (value){
-                      setState((){
+                    onChanged: (value) {
+                      setState(() {
                         selectedValue = value as String;
                       });
-                      },
-                    buttonHeight: 40,
-                    buttonWidth: 140,
-                    itemHeight: 40,
+                    },
                   ),
                 ),
               ),
