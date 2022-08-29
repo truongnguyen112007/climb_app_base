@@ -1,8 +1,11 @@
 import 'package:climb_app_base/components/text_style.dart';
+import 'package:climb_app_base/data/event_bus/hide_map_event.dart';
 import 'package:climb_app_base/modules/search_page/tab_all.dart';
 import 'package:climb_app_base/modules/search_page/tab_persons.dart';
 import 'package:climb_app_base/modules/search_page/tab_places.dart';
 import 'package:climb_app_base/modules/search_page/tab_routes.dart';
+import 'package:climb_app_base/utils/app_utils.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/navigator_utils.dart';
@@ -21,8 +24,26 @@ final List<String> search = [
   'Persons',
 ];
 
-class _SearchPageState extends State<SearchPage> {
+final List<String> wallHeight = [
+  '6m',
+  '8m',
+  '12m',
+];
 
+final List<String> holdSet = [
+  'Standard',
+  'Custom',
+];
+
+final List<String> itemCity = [
+  'item1',
+  'item2',
+  'item3'
+];
+
+class _SearchPageState extends State<SearchPage> {
+  String? selectedValue;
+  var isShowMap = false;
   int selectedIndex = 1;
   TextEditingController? textEditingController;
   var pageController = PageController(initialPage: 1);
@@ -30,12 +51,12 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     pageController.addListener(() {
-     var newPage = pageController.page!.round();
-     if(newPage != selectedIndex){
-       setState((){
-         selectedIndex = newPage;
-       });
-     }
+      var newPage = pageController.page!.round();
+      if (newPage != selectedIndex) {
+        setState(() {
+          selectedIndex = newPage;
+        });
+      }
     });
     textEditingController = TextEditingController();
     super.initState();
@@ -44,10 +65,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return ScreenUtilInit(
-      builder: (BuildContext context, Widget? child) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
+        return Scaffold(
           resizeToAvoidBottomInset: false,
           body: Column(
             children: [
@@ -166,69 +184,177 @@ class _SearchPageState extends State<SearchPage> {
                       thickness: 1,
                       color: Colors.white24,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 15.w,
-                        right: 15.w,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.swap_vert,
-                                  color: Colors.white,
-                                ),
-                                AppText(
-                                  msg: 'Sort',
-                                  style: TextStyle(color: Colors.white54),
-                                )
-                              ],
+                    isShowMap
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: InkWell(
+                              onTap: () {
+                                filterDialog(context);
+                                Utils.fireEvent(
+                                  HideMapEvent(),
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.filter_alt_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  AppText(
+                                    msg: 'Filter',
+                                    style: TextStyle(color: Colors.white54),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.filter_alt_outlined,
-                                  color: Colors.white,
-                                ),
-                                AppText(
-                                  msg: 'Filter',
-                                  style: TextStyle(color: Colors.white54),
-                                )
-                              ],
-                            ),
-                          ),
-                          AppText(
-                            msg: 'Select',
-                            style: TextStyle(color: Colors.white54),
                           )
-                        ],
-                      ),
-                    ),
+                        : Padding(
+                            padding: EdgeInsets.only(
+                              left: 10.w,
+                              right: 15.w,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: () {},
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.swap_vert,
+                                        color: Colors.white,
+                                      ),
+                                      AppText(
+                                        msg: 'Sort',
+                                        style: TextStyle(color: Colors.white54),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.filter_alt_outlined,
+                                        color: Colors.white,
+                                      ),
+                                      AppText(
+                                        msg: 'Filter',
+                                        style: TextStyle(color: Colors.white54),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                AppText(
+                                  msg: 'Select',
+                                  style: TextStyle(color: Colors.white54),
+                                )
+                              ],
+                            ),
+                          ),
                   ],
                 ),
               ),
               Expanded(
-                child: PageView(physics: NeverScrollableScrollPhysics(),
+                child: PageView(
+                  physics: NeverScrollableScrollPhysics(),
                   controller: pageController,
                   children: [
                     TabAll(),
-                    TabPlaces(),
+                    TabPlaces(
+                      onCallBackShowMap: (isShowMap) {
+                        this.isShowMap = isShowMap;
+                        setState(() {});
+                      },
+                    ),
                     TabRouteSearch(),
                     TabPersons(),
                   ],
                 ),
+              ),
+            ],
+          ),
+    );
+  }
+
+  void filterDialog(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Color(0xFF212121),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            // height: size.height/3,
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                    left: 10.w, right: 20.w, top: 15.h, bottom: 10.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
+                    ),
+                    AppText(
+                      msg: 'Removes Filter',
+                      style: TextStyle(
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                thickness: 1,
+                color: Colors.white24,
+              ),
+              Center(
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton2(
+                    isExpanded: true, items: itemCity
+                      .map((item) =>
+                      DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),)
+                      .toList(),
+                    value: selectedValue,
+                      onChanged: (value){
+                      setState((){
+                        selectedValue = value as String;
+                      });
+                      },
+                    buttonHeight: 40,
+                    buttonWidth: 140,
+                    itemHeight: 40,
+                  ),
+                ),
+              ),
+              AppText(msg: ''),
+              Row(
+                children: [],
               )
             ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

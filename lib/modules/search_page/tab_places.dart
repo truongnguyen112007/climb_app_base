@@ -1,14 +1,17 @@
 import 'dart:async';
-
 import 'package:climb_app_base/components/item_places.dart';
+import 'package:climb_app_base/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../components/text_style.dart';
+import '../../data/event_bus/hide_map_event.dart';
 import '../../data/list_places_model.dart';
 
 class TabPlaces extends StatefulWidget {
-  const TabPlaces({Key? key}) : super(key: key);
+  final Function(bool) onCallBackShowMap;
+
+  const TabPlaces({Key? key, required this.onCallBackShowMap}) : super(key: key);
 
   @override
   State<TabPlaces> createState() => _TabPlacesState();
@@ -60,9 +63,13 @@ class _TabPlacesState extends State<TabPlaces> {
 
   late CameraPosition _kGooglePlex;
   final Set<Marker> markers = new Set();
-
+  StreamSubscription<HideMapEvent>? _hideMapStream;
   @override
   void initState() {
+    _hideMapStream = Utils.eventBus.on<HideMapEvent>().listen((event) {
+      isShowMap = false;
+      setState((){});
+    });
     _kGooglePlex = CameraPosition(
         target: LatLng(lPlaces[0].lat, lPlaces[0].lng), zoom: 15);
     for (int i = 0; i < lPlaces.length; i++) {
@@ -107,7 +114,7 @@ class _TabPlacesState extends State<TabPlaces> {
                 ),
                 itemCount: lPlaces.length,
               ),
-              color: Colors.black,
+              color:  Color(0xFF3B4244),
             ),
             visible: !isShowMap,
           ),
@@ -117,9 +124,12 @@ class _TabPlacesState extends State<TabPlaces> {
             child: OutlinedButton(
               onPressed: () {
                 isShowMap = !isShowMap;
+                widget.onCallBackShowMap(isShowMap);
                 setState(() {});
               },
               style: ButtonStyle(
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                splashFactory: NoSplash.splashFactory,
                 side: MaterialStateProperty.all(
                   BorderSide(color: Colors.deepOrange, width: 1),
                 ),
@@ -133,7 +143,22 @@ class _TabPlacesState extends State<TabPlaces> {
                   ),
                 ),
               ),
-              child: Row(
+              child: isShowMap ?
+               Row(
+                children: [
+                  Icon(
+                    Icons.menu,
+                    color: Colors.deepOrange,
+                  ),
+                  SizedBox(
+                    width:10.w,
+                  ),
+                  AppText(
+                    msg: 'List',
+                    style: TextStyle(color: Colors.deepOrange),
+                  )
+                ],
+              ):Row(
                 children: [
                   Icon(
                     Icons.location_on,
@@ -147,7 +172,7 @@ class _TabPlacesState extends State<TabPlaces> {
                     style: TextStyle(color: Colors.deepOrange),
                   )
                 ],
-              ),
+              ) ,
             ),
           )
         ],

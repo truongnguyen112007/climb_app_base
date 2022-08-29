@@ -4,7 +4,6 @@ import 'package:climb_app_base/modules/search_page/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../components/item_feed.dart';
 import '../../utils/navigator_utils.dart';
 
@@ -71,7 +70,7 @@ class _TabHomeState extends State<TabHome> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color(0xFF282D2F),
+      backgroundColor: Color(0xFF3B4244),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('RECLIMB'),
