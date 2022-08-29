@@ -38,7 +38,7 @@ final List<String> holdSet = [
 final List<String> itemCity = ['item1', 'item2', 'item3'];
 
 class _SearchPageState extends State<SearchPage> {
-  String? selectedValue;
+  String? selectedValue = itemCity[0];
   var isShowMap = false;
   int selectedIndex = 1;
   TextEditingController? textEditingController;
@@ -315,14 +315,29 @@ class _SearchPageState extends State<SearchPage> {
                 color: Colors.white24,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 20.w,right: 20.w),
+                padding: EdgeInsets.only(left: 20.w, right: 20.w),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton2(
                     customButton: Container(
+                      height: 40.h,
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10,),
+                          AppText(
+                            msg: selectedValue ?? '',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.arrow_drop_down_rounded,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
                       decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(20),
-                        border: Border.all(width: 25,color: Colors.white24)),
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(width: 1, color: Colors.red)),
                     ),
                     isExpanded: true,
                     items: itemCity
