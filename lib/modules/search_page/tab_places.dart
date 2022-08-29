@@ -75,25 +75,13 @@ class _TabPlacesState extends State<TabPlaces> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery
+        .of(context)
+        .size;
     return Container(
       color: Color(0xFF282D2F),
       child: Stack(
         children: [
-          Visibility(
-            child: ListView.separated(
-              shrinkWrap: true,
-              padding: EdgeInsets.only(top: 10),
-              itemBuilder: (BuildContext context, int index) {
-                return ItemPlaces(model: lPlaces[index]);
-              },
-              separatorBuilder: (BuildContext context, int index) => SizedBox(
-                height: 10.h,
-              ),
-              itemCount: lPlaces.length,
-            ),
-            visible: !isShowMap,
-          ),
           GoogleMap(
             markers: markers,
             zoomControlsEnabled: true,
@@ -104,6 +92,24 @@ class _TabPlacesState extends State<TabPlaces> {
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
             },
+          ),
+          Visibility(
+            child: Container(
+              height: size.height,
+              child: ListView.separated(
+                shrinkWrap: true,
+                padding: EdgeInsets.only(top: 10),
+                itemBuilder: (BuildContext context, int index) {
+                  return ItemPlaces(model: lPlaces[index]);
+                },
+                separatorBuilder: (BuildContext context, int index) => SizedBox(
+                  height: 10.h,
+                ),
+                itemCount: lPlaces.length,
+              ),
+              color: Colors.black,
+            ),
+            visible: !isShowMap,
           ),
           Container(
             padding: EdgeInsets.only(bottom: 20.h),
