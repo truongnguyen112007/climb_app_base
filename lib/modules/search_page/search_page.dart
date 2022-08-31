@@ -8,6 +8,7 @@ import 'package:climb_app_base/utils/app_utils.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../components/filter_dialog.dart';
 import '../../utils/navigator_utils.dart';
 
 class SearchPage extends StatefulWidget {
@@ -24,21 +25,7 @@ final List<String> search = [
   'Persons',
 ];
 
-final List<String> wallHeight = [
-  '6m',
-  '8m',
-  '12m',
-];
-
-final List<String> holdSet = [
-  'Standard',
-  'Custom',
-];
-
-final List<String> itemCity = ['item1', 'item2', 'item3'];
-
 class _SearchPageState extends State<SearchPage> {
-  String? selectedValue = itemCity[0];
   var isShowMap = false;
   int selectedIndex = 1;
   TextEditingController? textEditingController;
@@ -185,7 +172,13 @@ class _SearchPageState extends State<SearchPage> {
                         alignment: Alignment.center,
                         child: InkWell(
                           onTap: () {
-                            filterDialog(context);
+                            showModalBottomSheet<void>(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (BuildContext context) {
+                                return FilterDialog();
+                              },
+                            );
                             Utils.fireEvent(
                               HideMapEvent(),
                             );
@@ -229,7 +222,15 @@ class _SearchPageState extends State<SearchPage> {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                showModalBottomSheet<void>(
+                                  context: context,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (BuildContext context) {
+                                    return FilterDialog();
+                                  },
+                                );
+                              },
                               child: Row(
                                 children: [
                                   Icon(
@@ -272,114 +273,6 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ],
       ),
-    );
-  }
-
-  void filterDialog(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Color(0xFF212121),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            // height: size.height/3,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 10.w, right: 20.w, top: 15.h, bottom: 10.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                    ),
-                    AppText(
-                      msg: 'Removes Filter',
-                      style: TextStyle(
-                          color: Colors.deepOrange,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                thickness: 1,
-                color: Colors.white24,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    customButton: Container(
-                      height: 40.h,
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          AppText(
-                            msg: selectedValue ?? '',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Spacer(),
-                          Icon(
-                            Icons.arrow_drop_down_rounded,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(width: 1, color: Colors.white24),
-                      ),
-                    ),
-                    isExpanded: true,
-                    items: itemCity
-                        .map(
-                          (item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue = value as String;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              AppText(
-                msg: 'Wall Height',
-                style: TextStyle(color: Colors.white70,fontSize: 20),
-              ),
-              AppText(
-                msg: 'Holds set',
-                style: TextStyle(color: Colors.white70,fontSize: 20),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 

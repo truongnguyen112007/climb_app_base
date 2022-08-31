@@ -11,7 +11,8 @@ import '../../data/list_places_model.dart';
 class TabPlaces extends StatefulWidget {
   final Function(bool) onCallBackShowMap;
 
-  const TabPlaces({Key? key, required this.onCallBackShowMap}) : super(key: key);
+  const TabPlaces({Key? key, required this.onCallBackShowMap})
+      : super(key: key);
 
   @override
   State<TabPlaces> createState() => _TabPlacesState();
@@ -64,11 +65,12 @@ class _TabPlacesState extends State<TabPlaces> {
   late CameraPosition _kGooglePlex;
   final Set<Marker> markers = new Set();
   StreamSubscription<HideMapEvent>? _hideMapStream;
+
   @override
   void initState() {
     _hideMapStream = Utils.eventBus.on<HideMapEvent>().listen((event) {
       isShowMap = false;
-      setState((){});
+      setState(() {});
     });
     _kGooglePlex = CameraPosition(
         target: LatLng(lPlaces[0].lat, lPlaces[0].lng), zoom: 15);
@@ -82,9 +84,7 @@ class _TabPlacesState extends State<TabPlaces> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery
-        .of(context)
-        .size;
+    final Size size = MediaQuery.of(context).size;
     return Container(
       color: Color(0xFF282D2F),
       child: Stack(
@@ -114,7 +114,7 @@ class _TabPlacesState extends State<TabPlaces> {
                 ),
                 itemCount: lPlaces.length,
               ),
-              color:  Color(0xFF3B4244),
+              color: Color(0xFF3B4244),
             ),
             visible: !isShowMap,
           ),
@@ -143,36 +143,37 @@ class _TabPlacesState extends State<TabPlaces> {
                   ),
                 ),
               ),
-              child: isShowMap ?
-               Row(
-                children: [
-                  Icon(
-                    Icons.menu,
-                    color: Colors.deepOrange,
-                  ),
-                  SizedBox(
-                    width:10.w,
-                  ),
-                  AppText(
-                    msg: 'List',
-                    style: TextStyle(color: Colors.deepOrange),
-                  )
-                ],
-              ):Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    color: Colors.deepOrange,
-                  ),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  AppText(
-                    msg: 'Map',
-                    style: TextStyle(color: Colors.deepOrange),
-                  )
-                ],
-              ) ,
+              child: isShowMap
+                  ? Row(
+                      children: [
+                        Icon(
+                          Icons.menu,
+                          color: Colors.deepOrange,
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        AppText(
+                          msg: 'List',
+                          style: TextStyle(color: Colors.deepOrange),
+                        )
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: Colors.deepOrange,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        AppText(
+                          msg: 'Map',
+                          style: TextStyle(color: Colors.deepOrange),
+                        )
+                      ],
+                    ),
             ),
           )
         ],

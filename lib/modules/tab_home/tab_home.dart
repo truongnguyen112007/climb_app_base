@@ -186,13 +186,12 @@ class _TabHomeState extends State<TabHome> {
                   ),
                 );
               },
-              // itemListView(size, listInfo[index]),
               itemCount: loading ? listInfo.length + 1 : listInfo.length,
               shrinkWrap: true,
               separatorBuilder: (BuildContext context, int index) => SizedBox(
                 height: 1,
               ),
-            )
+            ),
           ],
         ),
       ),

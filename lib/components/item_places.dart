@@ -70,9 +70,9 @@ class _ItemPlacesState extends State<ItemPlaces> {
                         style: TextStyle(color: Colors.white54, fontSize: 17),
                       ),
                     ],
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),
