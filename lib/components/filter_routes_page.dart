@@ -101,9 +101,25 @@ class _FilterRoutesState extends State<FilterRoutes> {
               height: 10.h,
             ),
             textFilter("Status"),
-            Tags(
-              itemCount: status.length,
-              itemBuilder: (int index)=>Container(child: Text(status[index]),padding: EdgeInsets.all(20),color: Colors.amber,),
+            Padding(
+              padding: EdgeInsets.all(10.h),
+              child: Tags(
+                columns: 2,
+                itemCount: status.length,
+                alignment: WrapAlignment.start,
+                itemBuilder: (int index) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.amber,
+                  ),
+                  child: Text(
+                    status[index],
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  padding:
+                      EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),
+                ),
+              ),
             ),
             textFilter("Corners"),
             Padding(

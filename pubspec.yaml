@@ -25,7 +25,7 @@ dependencies:
   dropdown_button2: ^1.7.2
   fluro: ^2.0.3
   sqflite: ^2.0.3+1
-  flutter_tags: ^0.4.9+1
+  flutter_tags: ^1.0.0-nullsafety.1
 
 dev_dependencies:
   flutter_test:
