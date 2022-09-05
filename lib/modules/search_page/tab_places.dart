@@ -89,16 +89,21 @@ class _TabPlacesState extends State<TabPlaces> {
       color: Color(0xFF282D2F),
       child: Stack(
         children: [
-          GoogleMap(
-            markers: markers,
-            zoomControlsEnabled: true,
-            zoomGesturesEnabled: true,
-            scrollGesturesEnabled: true,
-            mapType: MapType.normal,
-            initialCameraPosition: _kGooglePlex,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-            },
+          Visibility(
+            child: GoogleMap(
+              markers: markers,
+              zoomControlsEnabled: true,
+              zoomGesturesEnabled: true,
+              scrollGesturesEnabled: true,
+              mapType: MapType.normal,
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: (GoogleMapController controller) {
+                try {
+                  _controller.complete(controller);
+                } catch (ex) {}
+              },
+            ),
+            visible: isShowMap,
           ),
           Visibility(
             child: Container(

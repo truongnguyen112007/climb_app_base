@@ -208,7 +208,6 @@ class _FilterDialogState extends State<FilterDialog> {
       ),
     );
   }
-
   Widget ListFilterDialog(
       List nameList, int select, Function(int) onCallBackSelect) {
     final Size size = MediaQuery.of(context).size;

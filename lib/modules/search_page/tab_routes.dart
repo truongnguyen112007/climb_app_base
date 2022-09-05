@@ -49,6 +49,7 @@ class _TabRouteSearchState extends State<TabRouteSearch> {
         nameRoute: 'Adam',
         nameAuthor: 'AdamKowalski',
         rank: '5C',
+        status: 'OS',
         height: '12m',
         date: '2022-05-02'),
     RoutesModel(
@@ -61,6 +62,7 @@ class _TabRouteSearchState extends State<TabRouteSearch> {
         nameRoute: 'Adam',
         nameAuthor: 'AdamKowalski',
         rank: '5A',
+        status: 'UF',
         height: '12m',
         date: '2022-05-02'),
   ];
@@ -68,7 +70,6 @@ class _TabRouteSearchState extends State<TabRouteSearch> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return SizedBox();
     return Container(
       height: size.height,
       child: ListView.separated(

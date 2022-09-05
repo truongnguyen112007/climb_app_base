@@ -1,3 +1,4 @@
+import 'package:climb_app_base/components/filter_routes_page.dart';
 import 'package:climb_app_base/components/text_style.dart';
 import 'package:climb_app_base/data/event_bus/hide_map_event.dart';
 import 'package:climb_app_base/modules/search_page/tab_all.dart';
@@ -5,7 +6,6 @@ import 'package:climb_app_base/modules/search_page/tab_persons.dart';
 import 'package:climb_app_base/modules/search_page/tab_places.dart';
 import 'package:climb_app_base/modules/search_page/tab_routes.dart';
 import 'package:climb_app_base/utils/app_utils.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../components/filter_dialog.dart';
@@ -223,13 +223,14 @@ class _SearchPageState extends State<SearchPage> {
                             ),
                             InkWell(
                               onTap: () {
+                                selectedIndex != 2 ?
                                 showModalBottomSheet<void>(
                                   context: context,
                                   backgroundColor: Colors.transparent,
                                   builder: (BuildContext context) {
                                     return FilterDialog();
                                   },
-                                );
+                                ): NavigatorUtils.moveBottomToTop(FilterRoutes(), context);
                               },
                               child: Row(
                                 children: [
