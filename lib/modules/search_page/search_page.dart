@@ -1,4 +1,5 @@
 import 'package:climb_app_base/components/filter_routes_page.dart';
+import 'package:climb_app_base/components/select_routes.dart';
 import 'package:climb_app_base/components/text_style.dart';
 import 'package:climb_app_base/data/event_bus/hide_map_event.dart';
 import 'package:climb_app_base/modules/search_page/tab_all.dart';
@@ -85,7 +86,7 @@ class _SearchPageState extends State<SearchPage> {
                           cursorHeight: 25.h,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
-                            hintText: 'Find places, route, climbes',
+                            hintText: 'Find places, route, climbs',
                             hintStyle: TextStyle(color: Colors.white30),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent),
@@ -132,6 +133,9 @@ class _SearchPageState extends State<SearchPage> {
                         onTap: () {
                           pageController.jumpToPage(index);
                           setState(() {
+                            if(isShowMap){
+                              isShowMap = false;
+                            }
                             selectedIndex = index;
                           });
                         },
@@ -172,6 +176,8 @@ class _SearchPageState extends State<SearchPage> {
                         alignment: Alignment.center,
                         child: InkWell(
                           onTap: () {
+                            isShowMap = false;
+                           if(mounted) setState((){});
                             showModalBottomSheet<void>(
                               context: context,
                               backgroundColor: Colors.transparent,
@@ -223,14 +229,7 @@ class _SearchPageState extends State<SearchPage> {
                             ),
                             InkWell(
                               onTap: () {
-                                selectedIndex != 2 ?
-                                showModalBottomSheet<void>(
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (BuildContext context) {
-                                    return FilterDialog();
-                                  },
-                                ): NavigatorUtils.moveBottomToTop(FilterRoutes(), context);
+                                 return filterOnClick();
                               },
                               child: Row(
                                 children: [
@@ -245,9 +244,14 @@ class _SearchPageState extends State<SearchPage> {
                                 ],
                               ),
                             ),
-                            AppText(
-                              msg: 'Select',
-                              style: TextStyle(color: Colors.white54),
+                            InkWell(
+                              onTap: (){
+                                return selectOnClick();
+                              },
+                              child: AppText(
+                                msg: 'Select',
+                                style: TextStyle(color: Colors.white54),
+                              ),
                             )
                           ],
                         ),
@@ -280,5 +284,57 @@ class _SearchPageState extends State<SearchPage> {
   void clearText() {
     textEditingController?.text = '';
     setState(() {});
+  }
+
+ void filterOnClick (){
+      switch (selectedIndex){
+        case 0 :
+        break;
+        case 1 :
+        {
+          showModalBottomSheet<void>(
+            context: context,
+            backgroundColor: Colors.transparent,
+            builder: (BuildContext context) {
+              return FilterDialog();
+            },
+          );
+          break;
+        }
+        case 2 :
+          {
+            NavigatorUtils.moveBottomToTop(FilterRoutes(), context);
+          }
+          break;
+        case 3:
+          break;
+      }
+  }
+
+  void selectOnClick (){
+    switch (selectedIndex) {
+      case 0 :
+        break;
+      case 1 :
+        break;
+      case 2 :
+        showModalBottomSheet(
+          context: context,isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (BuildContext context) {
+            return DraggableScrollableSheet(
+              initialChildSize: 0.5,
+              minChildSize: 0.5,
+              maxChildSize: 0.7,
+              builder:
+                  (BuildContext context, ScrollController scrollController) =>
+                      SelectRoutes(),
+            );
+          },
+        );
+        break;
+      case 3:
+        break;
+    }
   }
 }
